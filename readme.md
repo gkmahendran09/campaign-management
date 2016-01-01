@@ -1,26 +1,30 @@
-## WebKB Laravel Starter Kit
+WebKB Laravel Starter Kit
+=========================
 
-Starter Kit for Laravel based application used by WebKB.
+#### Starter Kit for Laravel based application used by WebKB.
+
 
 ### Quick Installation
 
-git pull -v https://gkmahendran09@bitbucket.org/webkb/laravel-starter-kit.git
+> git pull -v https://gkmahendran09@bitbucket.org/webkb/laravel-starter-kit.git
 
-composer install
 
-Copy .env.example to .env and update your local configuration
 
-php artisan key:generate
+`composer install`
 
-npm install
+Copy `.env.example` to `.env` and update your local configuration
 
-grunt
+`php artisan key:generate`
 
-chmod -R 777 storage/*
-chmod -R 777 bootstrap/cache/*
+`npm install`
 
-Copy the contents of Public folder to public_html and update the path variables
-in index.php
+`grunt`
+
+`chmod -R 777 storage/*`
+`chmod -R 777 bootstrap/cache/*`
+
+Copy the contents of `Public` folder to `public_html` and update the path variables
+in **index.php**
 
 
 
