@@ -10,7 +10,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'resources/assets/images/',
           src: ['**/*.{png,jpg,gif}'],
-          dest: '../public_html/site_assets/images/'
+          dest: 'public/site_assets/images/'
         }]
       }
     },
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         files: {
-          '../public_html/site_assets/css/site.css': 'resources/assets/stylesheets/site.scss'
+          'public/site_assets/css/site.css': 'resources/assets/stylesheets/site.scss'
         }
       }
     },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
     uglify: {
       build: {
         src: 'resources/assets/javascripts/build/site.js',
-        dest: '../public_html/site_assets/js/site.min.js'
+        dest: 'public/site_assets/js/site.min.js'
       }
     },
 
