@@ -2344,4 +2344,9 @@
 
 }(jQuery);
 
-
+//Show Modal
+function showModal(data) {
+  alert();
+  $("#modal .modal-body").html(data);
+  $("#Modal").modal();
+}

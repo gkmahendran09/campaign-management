@@ -30,7 +30,8 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: ['resources/assets/javascripts/bootstrap/*.js', 'resources/assets/javascripts/*.js'],
-        dest: 'resources/assets/javascripts/build/site.js'
+        // dest: 'resources/assets/javascripts/build/site.js'
+        dest: 'public/site_assets/js/site.min.js'
       }
 
     },
@@ -45,7 +46,8 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['resources/assets/javascripts/bootstrap/*.js', 'resources/assets/javascripts/*.js'],
-        tasks: ['concat', 'uglify'],
+        // tasks: ['concat', 'uglify'],
+        tasks: ['concat'],
         options: {
           spawn: false,
         },
@@ -81,6 +83,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
 
   // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-  grunt.registerTask('default', ['concat', 'uglify', 'imagemin', 'sass', 'watch']);
+  // grunt.registerTask('default', ['concat', 'uglify', 'imagemin', 'sass', 'watch']);
+  grunt.registerTask('default', ['concat', 'watch']);
 
 };

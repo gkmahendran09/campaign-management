@@ -39,7 +39,7 @@
                               <span class="icon-bar"></span>
                               <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand" href="{{route('home')}}">Campaign Management</a>
+                          <a class="navbar-brand" href="{{route('home')}}">Campaign Manager</a>
                       </div>
                       <!-- Collect the nav links, forms, and other content for toggling -->
                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,13 +58,15 @@
           @yield('main')
         </section>
 
-        <footer class="container-fluid">
-          <hr>
-          <p class="text-center">Project: Campaign Manger</p>
+        <footer class="container">
+          <div class="row">
+            <hr>
+            <p class="text-center">Project: Campaign Manger</p>
+          </div>
         </footer>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="/site_assets/js/site.min.js"></script>
+        <script src="/site_assets/js/site.min.js"></script>        
 
         @stack('scripts')
 

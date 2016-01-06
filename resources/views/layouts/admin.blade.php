@@ -7,6 +7,8 @@
 
       <title>@yield('title') - Campaign Manager</title>
 
+      <meta name="_token" content="{!! csrf_token() !!}"/>
+
         <link href="/site_assets/css/site.css" rel="stylesheet" type="text/css">
 
         @stack('styles')
@@ -39,12 +41,13 @@
                               <span class="icon-bar"></span>
                               <span class="icon-bar"></span>
                           </button>
-                          <a class="navbar-brand" href="{{route('dashboard')}}">Campaign Management</a>
+                          <a class="navbar-brand" href="{{route('dashboard')}}">Campaign Manager</a>
                       </div>
                       <!-- Collect the nav links, forms, and other content for toggling -->
                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                           <ul class="nav navbar-nav">
-                            <li><a href="{{route('report')}}"><i class="fa fa-book"></i> Report</a></li>
+                            <li class="@yield('dashboard-active')"><a href="{{route('report')}}"><i class="fa fa-home"></i> Dashboard</a></li>
+                            <li class="@yield('report-active')"><a href="{{route('report')}}"><i class="fa fa-book"></i> Report</a></li>
                           </ul>
                           <ul class="nav navbar-nav navbar-right">
                             <li><a href="{{route('logout')}}"><i class="fa fa-sign-out"></i> Logout</a></li>
@@ -61,13 +64,36 @@
           @yield('main')
         </section>
 
-        <footer class="container-fluid">
-          <hr>
-          <p class="text-center">Project: Campaign Manger</p>
+        <footer class="container">
+          <div class="row">
+            <hr>
+            <p class="text-center">Project: Campaign Manger</p>
+          </div>
         </footer>
 
+        <!-- Modal -->
+        <div id="modal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="/site_assets/js/site.min.js"></script>
+        <script src="/site_assets/js/site.min.js"></script>       
 
         @stack('scripts')
 

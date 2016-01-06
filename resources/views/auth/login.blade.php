@@ -28,7 +28,7 @@
         @endif
         <div class="panel panel-default">
           <div class="panel-heading">
-            Admin
+            Admin Login
           </div>
           <div class="panel-body">
             <form method="post" action="/auth/login" class="form-horizontal" role="form">

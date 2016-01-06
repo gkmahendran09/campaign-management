@@ -17,7 +17,22 @@ class AdminController extends Controller
       // return view('admin.dashboard');
     }
 
-    public function start() {
-      // return view('admin.dashboard');
+    public function build($campaign_id) {
+      $campaign = \App\CampaignMaster::findOrFail($campaign_id);
+      $data = [
+        'campaign_id' => $campaign_id,
+        'campaign_title' => $campaign->campaign_title
+      ];
+      return view('admin.build')->with('data', $data);
+    }
+
+    public function storeBuild($campaign_id, Request $request) {
+      $campaign = \App\CampaignMaster::findOrFail($campaign_id);
+      return $request->all();
+      // $data = [
+      //   'campaign_id' => $campaign_id,
+      //   'campaign_title' => $campaign->campaign_title
+      // ];
+      // return view('admin.build')->with('data', $data);
     }
 }
