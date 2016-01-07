@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use Validator;
-use URL;
+use DB;
 
 class CampaignController extends Controller
 {
@@ -67,12 +67,16 @@ class CampaignController extends Controller
               } else {
 
                 $c_title = $request->get('campaign_name');
-
                 $campaign = new \App\CampaignMaster;
-                $campaign->campaign_title = $c_title;
-                $campaign->save();
+                $campaign->campaign_title = $c_title;                
+
+                DB::transaction(function() use ($campaign)
+                {
+                   $campaign->save();
+                });
 
                 $url = route('build', ['campaign_id' => $campaign->campaign_id]);
+
 
                 return response()->json(['success' => 'true', 'redirect' => $url], 200);
               }

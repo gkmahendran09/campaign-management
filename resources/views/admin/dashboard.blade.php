@@ -82,7 +82,7 @@
   				window.location = data.redirect;
   			},
   			error: function(data) {
-          showErrors(data);
+          showErrors(data.responseText);
   			}
   		});
 

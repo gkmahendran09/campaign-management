@@ -1,15 +1,25 @@
 //Show Modal
-function showModal(data) {
+function showModal(title, data) {
   // console.log(data);
-  $("#modal .modal-body").html(data.responseText);
+  $("#modal .modal-title").html(title);
+  $("#modal .modal-body").html(data);
   $("#modal").modal();
 }
 
 //Show Errors
 function showErrors(data) {
-  var response = JSON.parse(data.responseText);
+  var response = JSON.parse(data);
 
   $.each(response.errors, function(key, value) {
+    $("[data-error-msg-for='"+ key +"']").html(value);
+  });
+
+}
+
+//Show Errors
+function showErrorsForFormRequest(data) {
+  var response = data;  
+  $.each(response, function(key, value) {
     $("[data-error-msg-for='"+ key +"']").html(value);
   });
 

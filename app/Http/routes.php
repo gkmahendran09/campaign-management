@@ -16,6 +16,7 @@
  *  ------------------------------------------
  */
 Route::pattern('campaign_id', '[0-9]+');
+Route::pattern('form_id', '[0-9]+');
 
 
 /** ------------------------------------------
@@ -24,6 +25,7 @@ Route::pattern('campaign_id', '[0-9]+');
  */
 
 Route::get('/', ['as' => 'home', 'uses' => 'FrontendController@index']);
+Route::get('/preview_form/{campaign_id}/{form_id}', ['as' => 'preview_form', 'uses' => 'FrontendController@preview_form']);
 
 
 /** ------------------------------------------
