@@ -17,13 +17,9 @@ class CampaignMaster extends Model
 
   protected $primaryKey = 'campaign_id';
 
-  public function get_all_campaign() {
-    return $this->select(array('campaign_id', 'campaign_title'))->get();
-  }
-
   public function forms()
   {
     // return $this->hasMany('App\Comment', 'foreign_key', 'local_key');
     return $this->hasMany('App\CampaignForm', 'campaign_id', 'campaign_id');
-  }  
+  }
 }

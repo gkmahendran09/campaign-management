@@ -1,3 +1,7 @@
+//get loader
+function getAjaxLoader(message) {
+  return '<i class="fa fa-spinner fa-spin"></i> ' + message;
+}
 //Make Ajax Request
 //triggerAjaxRequest(type, url, data, onSuccess(), onError())
 function triggerAjaxRequest(type, url, data, onSuccess, onError) {
@@ -20,8 +24,22 @@ function defaultAjaxErrorHandler(data) {
   if(data.responseJSON) {
     showErrorsForFormRequest(data.responseJSON);
   } else {
-    showModal("Error", "Please try reloading the page.");
+    // showModal("Error", "Please try reloading the page.");
+    showModal("Error", data.responseText);
+    console.log(data);
   }
+}
+
+//Dynamic Form On Success
+function dynamicFormOnSuccess(data) {
+  clearErrorsForFormRequest();
+  // var url = data.previewURL;
+  // var modalData = '<div class="alert alert-success">' + data.message + '</div>';
+  // modalData += '<div class="row">';
+  // modalData += '<div class="col-md-12 text-center">';
+  // modalData += '<a href="' + url + '" class="btn btn-primary" id="preview_form_btn">Preview Form</a>';
+  // modalData += '</div>';
+  showModal("Success", data.message);
 }
 
 //Build Form On Success

@@ -14,11 +14,19 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+     public function index($campaign_id, Request $request)
+     {
+         if ($request->ajax())
+         {
+               $campaign = \App\CampaignMaster::findOrFail($campaign_id);
+               return response()->json(['success' => 'true', 'message' => $campaign->forms()->get(['form_id', 'form_title'])], 200);
 
+         }
+         else
+         {
+             return response()->json(['success' => 'false', 'message' => 'Not an Ajax request'], 400);
+         }
+     }
     /**
      * Show the form for creating a new resource.
      *

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Http\Requests\StoreFormRequest;
 use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
@@ -40,5 +38,10 @@ class FrontendController extends Controller
       return view('preview_form')->with('data', $data);
     }
 
+  }
+
+  public function store_form_data(StoreFormRequest $request)
+  {
+    return response()->json(['success' => 'true', 'message' => 'Good Request.'], 200);
   }
 }

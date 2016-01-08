@@ -19,24 +19,16 @@ class CampaignController extends Controller
      */
     public function index(Request $request)
     {
-      if (Auth::check()) {
+        if ($request->ajax())
+        {
+              $campaign = new \App\CampaignMaster;
+              return response()->json(['success' => 'true', 'message' => $campaign->get(['campaign_id', 'campaign_title'])], 200);
 
-          if ($request->ajax())
-          {
-                $campaign = new \App\CampaignMaster;
-                return response()->json(['success' => 'true', 'message' => $campaign->get_all_campaign()], 200);
-
-          }
-          else
-          {
-              return response()->json(['success' => 'false', 'message' => 'Not an Ajax request'], 400);
-          }
-      }
-      else
-      {
-          // return response()->json(['success' => 'false', 'message' => 'User not logged in'], 400);
-          return response()->json(['success' => 'false', 'message' => 'User not logged in']);
-      }
+        }
+        else
+        {
+            return response()->json(['success' => 'false', 'message' => 'Not an Ajax request'], 400);
+        }
     }
 
     /**

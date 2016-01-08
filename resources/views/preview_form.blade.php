@@ -25,24 +25,22 @@
         </div>
       </div>
       <div class="panel-body">
-        <form method="post" action="{{route('store_form_data')}}" role="form">
+        <form method="post" action="{{route('store_form_data')}}" role="form" id="dynamic_form">
           {{csrf_field()}}
           <input type="hidden" name="campaign_id" value="{{$data['campaign_id']}}">
           <input type="hidden" name="form_id" value="{{$data['form_id']}}">
           @foreach ($data['fields'] as $field)
-            @if ($field->datatype == 'text')
             <div class="form-group">
-              <input type="text" name="{{$field->field_key}}" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
+              @if ($field->datatype == 'text')
+                <input type="text" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
+              @elseif ($field->datatype == 'int')
+                <input type="number" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
+              @elseif ($field->datatype == 'date')
+                <input type="date" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
+              @endif
+              <span class="text-danger" data-error-msg-for="field_key.{{$field->field_key}}"></span>
+              <input type="hidden" name="field_datatype[{{$field->field_key}}]" value="{{$field->datatype}}">
             </div>
-            @elseif ($field->datatype == 'int')
-            <div class="form-group">
-              <input type="number" name="{{$field->field_key}}" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
-            </div>
-            @elseif ($field->datatype == 'date')
-            <div class="form-group">
-              <input type="date" name="{{$field->field_key}}" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
-            </div>
-            @endif
           @endforeach
           <input type="submit" class="btn btn-primary" value="submit">
         </form>

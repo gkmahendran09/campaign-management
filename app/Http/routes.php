@@ -51,6 +51,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 
     //GET Request
     Route::get('campaign/get', array('as' => 'api-get-campaign', 'uses' => 'CampaignController@index'));
+    Route::get('form/get/{campaign_id}', array('as' => 'api-get-form', 'uses' => 'FormController@index'));
 });
 
 
