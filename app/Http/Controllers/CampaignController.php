@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\Requests\CreateCampaignRequest;
 use App\Http\Controllers\Controller;
 
-use Auth;
-use Validator;
 use DB;
+use Auth;
+use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
@@ -45,52 +44,19 @@ class CampaignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(CreateCampaignRequest $request)
     {
-      if (Auth::check()) {
+        $c_title = $request->get('campaign_name');
+        $campaign = new \App\CampaignMaster;
+        $campaign->campaign_title = $c_title;
 
-          if ($request->ajax())
-          {
-              $rules = [
-                  'campaign_name' => 'required|unique:campaign_master,campaign_title'
-              ];
+        DB::transaction(function() use ($campaign)
+        {
+           $campaign->save();
+        });
 
-              $messages = [
-                  'campaign_name.required' => 'Campaign Name is required',
-                  'campaign_name.unique' => 'Campaign Name has already been taken.'
-              ];
-
-              $validation = Validator::make($request->only('campaign_name'), $rules, $messages);
-
-              if ($validation->fails()) {
-                return response()->json(['success' => 'false', 'errors' => $validation->errors()], 400);
-              } else {
-
-                $c_title = $request->get('campaign_name');
-                $campaign = new \App\CampaignMaster;
-                $campaign->campaign_title = $c_title;                
-
-                DB::transaction(function() use ($campaign)
-                {
-                   $campaign->save();
-                });
-
-                $url = route('build', ['campaign_id' => $campaign->campaign_id]);
-
-
-                return response()->json(['success' => 'true', 'redirect' => $url], 200);
-              }
-
-          }
-          else
-          {
-              return response()->json(['success' => 'false', 'message' => 'Not an Ajax request'], 400);
-          }
-      }
-      else
-      {
-          return response()->json(['success' => 'false', 'message' => 'User not logged in']);
-      }
+        $url = route('build', ['campaign_id' => $campaign->campaign_id]);
+        return response()->json(['success' => 'true', 'redirect' => $url], 200);
     }
 
     /**

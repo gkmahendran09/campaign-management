@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.plain')
 
 @section('title', 'Preview Form')
 
@@ -10,7 +10,7 @@
 
 @section('main')
 <div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
+  <div class="col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="panel-title">
@@ -25,7 +25,10 @@
         </div>
       </div>
       <div class="panel-body">
-        <form method="post" action="" role="form">
+        <form method="post" action="{{route('store_form_data')}}" role="form">
+          {{csrf_field()}}
+          <input type="hidden" name="campaign_id" value="{{$data['campaign_id']}}">
+          <input type="hidden" name="form_id" value="{{$data['form_id']}}">
           @foreach ($data['fields'] as $field)
             @if ($field->datatype == 'text')
             <div class="form-group">

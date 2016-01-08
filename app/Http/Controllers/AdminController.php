@@ -50,7 +50,9 @@ class AdminController extends Controller
          $field_name = $request->get('field_name');
          $field_datatype = $request->get('field_datatype');
 
-         for( $i = 0; $i < count($field_name); $i++ )
+         $i = 0;
+
+         foreach($field_name as $key => $val)
          {
            //Campaign Form Fields Setup
            $field = new \App\CampaignField;
@@ -59,11 +61,13 @@ class AdminController extends Controller
 
            $field->field_key = $c_id . '_' . $f_id . '_field_' . $i;
 
-           $field->field_friendly_name = $field_name[$i];
-           $field->datatype = $field_datatype[$i];
+           $field->field_friendly_name = $field_name[$key];
+           $field->datatype = $field_datatype[$key];
 
            //Save Field
            $field->save();
+
+           $i++;
 
          }
 

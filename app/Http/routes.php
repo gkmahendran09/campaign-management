@@ -25,7 +25,8 @@ Route::pattern('form_id', '[0-9]+');
  */
 
 Route::get('/', ['as' => 'home', 'uses' => 'FrontendController@index']);
-Route::get('/preview_form/{campaign_id}/{form_id}', ['as' => 'preview_form', 'uses' => 'FrontendController@preview_form']);
+Route::get('/preview_form/{campaign_id}/{form_id}/{raw?}', ['as' => 'preview_form', 'uses' => 'FrontendController@preview_form']);
+Route::post('/store_form_data', ['as' => 'store_form_data', 'uses' => 'FrontendController@store_form_data']);
 
 
 /** ------------------------------------------

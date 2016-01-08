@@ -14,7 +14,7 @@ class FrontendController extends Controller
     return view('index');
   }
 
-  public function preview_form($campaign_id, $form_id)
+  public function preview_form($campaign_id, $form_id, $raw = 1)
   {
 
     $campaign = \App\CampaignMaster::findOrFail($campaign_id);
@@ -26,11 +26,19 @@ class FrontendController extends Controller
     $form_name = $form->form_title;
 
     $data = [
+      'campaign_id' => $campaign_id,
       'campaign_name' => $campaign_name,
+      'form_id' => $form_id,
       'form_name' => $form_name,
       'fields' => $fields
     ];
 
-    return view('preview_form')->with('data', $data);
+    if($raw) {
+      $returnHTML = view('preview_form')->with('data', $data)->render();
+      return response()->json(array('success' => true, 'html'=>$returnHTML));
+    } else {
+      return view('preview_form')->with('data', $data);
+    }
+
   }
 }

@@ -43,7 +43,7 @@ class BuildFormRequest extends Request
     public function rules()
     {
         $rules = [
-            'form_name' => 'required|unique:campaign_forms,form_title'
+            'form_name' => 'required|unique:campaign_forms,form_title,NULL,form_id,campaign_id,'. $this->segment(3)
         ];
 
         $field_name = $this->request->get('field_name');

@@ -52,7 +52,8 @@
                             <tbody>
                               <tr>
                                 <td>
-                                  <input type="text" required="true" class="form-control" placeholder="Friendly Name" name="field_name[]">
+                                  <input type="text" required="true" class="form-control" placeholder="Friendly Name" name="field_name[0]">
+                                  <span class="text-danger" data-error-msg-for="field_name.0"></span>
                                 </td>
                                 <td>
                                   <select required="true" name="field_datatype[]" class="form-control">
@@ -60,7 +61,7 @@
                                     <option value="int">Number</option>
                                     <option value="date">Date</option>
                                   </select>
-                                  <span class="text-danger" data-error-msg-for="field_datatype[]"></span>
+                                  <span class="text-danger" data-error-msg-for="field_datatype.0"></span>
                                 </td>
                                 <td>
 
@@ -92,8 +93,11 @@
 <script>
   $(document).ready(function() {
 
+    var field_count = 1;
+
     $("body").on("click", "#new_field", function() {
-      $("#form_builder").append(getTemplate());
+      $("#form_builder").append(getTemplate(field_count));
+      field_count++;
     });
 
     $("body").on("click", "#delete_field", function() {
@@ -105,39 +109,24 @@
 
   		e.preventDefault();
 
-  		$.ajax({
-  			type: $(this).attr('method'),
-  			url: $(this).attr('action'),
-  			data: $(this).serialize(),
-  			dataType: "json",
-  			success: function(data) {
-          var url = data.previewURL;
-          var modalData = '<div class="alert alert-success">' + data.message + '</div>';
-          modalData += '<div class="row">';
-          modalData += '<div class="col-md-6 col-md-offset-3">';
-          modalData += '<a href="' + url + '" class="btn btn-primary pull-left">Preview Form</a>';
-          modalData += '<button data-dismiss="modal" class="btn btn-default pull-right" type="button">New Form</button>';
-          modalData += '</div>';
-          showModal("Success", modalData);
-  			},
-  			error: function(data) {
-          showErrorsForFormRequest(data.responseJSON);
-  			}
-  		});
+      var type = $(this).attr('method');
+      var url = $(this).attr('action');
+      var data = $(this).serialize();
+
+      //triggerAjaxRequest(type, url, data, onSuccess(), onError())
+      triggerAjaxRequest(type, url, data, buildFormOnSuccess, defaultAjaxErrorHandler);
+
 
   	});
 
+    $("body").on("click", "#preview_form_btn", function(e) {
+      e.preventDefault();
 
+      var url = $(this).attr("href") + '/0';
+
+      window.open(url,"","width=600, height=600");
+
+    });
   });
-
-  function getTemplate() {
-    var template = '<tr>';
-    template += '<td><input type="text" name="field_name[]" placeholder="Friendly Name" class="form-control" required="true"></td>';
-    template += '<td><select  class="form-control" name="field_datatype[]" required="true"><option value="text">Text</option><option value="int">Number</option><option value="date">Date</option></select></td>';
-    template += '<td><a href="javascript:void(0);" class="btn btn-sm btn-danger" id="delete_field"><i class="fa fa-trash"></i> Delete</a></td>';
-    template += '</tr>';
-
-    return template;
-  }
 </script>
 @endpush

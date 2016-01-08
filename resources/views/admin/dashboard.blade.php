@@ -72,19 +72,13 @@
   	$("#create_campaign").on("submit", function(e) {
 
   		e.preventDefault();
+      var type = $(this).attr('method');
+      var url = $(this).attr('action');
+      var data = $(this).serialize();
 
-  		$.ajax({
-  			type: $(this).attr('method'),
-  			url: $(this).attr('action'),
-  			data: $(this).serialize(),
-  			dataType: "json",
-  			success: function(data) {
-  				window.location = data.redirect;
-  			},
-  			error: function(data) {
-          showErrors(data.responseText);
-  			}
-  		});
+      //triggerAjaxRequest(type, url, data, onSuccess(), onError())
+      triggerAjaxRequest(type, url, data, function(data){window.location = data.redirect;}, defaultAjaxErrorHandler);
+
 
   	});
 
@@ -101,13 +95,12 @@
     });
 
     //Load All Available Campaigns
-    $.ajax({
-      type: 'get',
-      url: "{{route('api-get-campaign')}}",
-      data: '',
-      dataType: "json",
-      success: function(data) {
+    var type = "get";
+    var url = "{{route('api-get-campaign')}}";
+    var data = "";
 
+    triggerAjaxRequest(type, url, data,
+      function(data){
         var response = data.message;
         if(data.message == "") {
           $('.campaign_id_container').html('No Campaigns');
@@ -120,14 +113,7 @@
 
           $('.campaign_id_container').html(strBuild);
         }
-
-
-
-      },
-      error: function(data) {
-
-      }
-    });
+      }, function(data){});    
 
 
   });
