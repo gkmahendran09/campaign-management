@@ -17,6 +17,7 @@
  */
 Route::pattern('campaign_id', '[0-9]+');
 Route::pattern('form_id', '[0-9]+');
+Route::pattern('order_by', '[a-z_]+');
 
 
 /** ------------------------------------------
@@ -52,6 +53,7 @@ Route::group(array('prefix' => 'api/v1'), function()
     //GET Request
     Route::get('campaign/get', array('as' => 'api-get-campaign', 'uses' => 'CampaignController@index'));
     Route::get('form/get/{campaign_id}', array('as' => 'api-get-form', 'uses' => 'FormController@index'));
+
 });
 
 
@@ -63,9 +65,14 @@ Route::group(array('prefix' => 'api/v1'), function()
 Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function()
 {
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
+    Route::get('manage_forms/{campaign_id}', ['as' => 'manage_forms', 'uses' => 'AdminController@manage_forms']);
     Route::get('build/{campaign_id}', ['as' => 'build', 'uses' => 'AdminController@build']);
     Route::post('build/{campaign_id}', 'AdminController@storeBuild');
     Route::get('report', ['as' => 'report', 'uses' => 'AdminController@report']);
+    Route::get('get_report/{campaign_id}/{form_id}', ['as' => 'get_report', 'uses' => 'AdminController@get_report']);
+
+    //Delete Form
+    Route::get('form/delete/{campaign_id}/{form_id}', array('as' => 'api-delete-form', 'uses' => 'AdminController@delete_form'));
 });
 
 

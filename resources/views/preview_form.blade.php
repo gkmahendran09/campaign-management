@@ -36,7 +36,7 @@
               @elseif ($field->datatype == 'int')
                 <input type="number" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
               @elseif ($field->datatype == 'date')
-                <input type="date" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}}">
+                <input type="text" name="field_key[{{$field->field_key}}]" class="form-control" required="true" placeholder="{{$field->field_friendly_name}} (Format: DD/MM/YYYY) ">
               @endif
               <span class="text-danger" data-error-msg-for="field_key.{{$field->field_key}}"></span>
               <input type="hidden" name="field_datatype[{{$field->field_key}}]" value="{{$field->datatype}}">

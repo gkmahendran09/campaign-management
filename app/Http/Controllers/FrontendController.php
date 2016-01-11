@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFormRequest;
 use App\Http\Controllers\Controller;
 
+use DB;
+
+
 class FrontendController extends Controller
 {
   public function index()
@@ -42,6 +45,41 @@ class FrontendController extends Controller
 
   public function store_form_data(StoreFormRequest $request)
   {
-    return response()->json(['success' => 'true', 'message' => 'Good Request.'], 200);
+
+    //Step 1:
+    $campaign_id = $request->get('campaign_id');
+    $form_id = $request->get('form_id');
+
+
+    //Step 2:
+
+    DB::transaction(function() use ($campaign_id, $form_id, $request)
+    {
+      $i = 0;
+
+       foreach($request->get("field_key") as $key => $val)
+       {
+         //Campaign Form Field Data Setup
+         $data = new \App\CampaignData;
+         $data->campaign_id = $campaign_id;
+         $data->form_id = $form_id;
+
+         $data->field_key = $key;
+         $data->field_value = $val;
+
+         $data->row_id = $request->session()->getid();
+
+         //Save Field
+         $data->save();
+
+         $i++;
+
+       }
+
+    });
+
+    $request->session()->regenerate();
+
+    return response()->json(['success' => 'true', 'message' => 'Success'], 200);
   }
 }

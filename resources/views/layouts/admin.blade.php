@@ -46,7 +46,7 @@
                       <!-- Collect the nav links, forms, and other content for toggling -->
                       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                           <ul class="nav navbar-nav">
-                            <li class="@yield('dashboard-active')"><a href="{{route('report')}}"><i class="fa fa-home"></i> Dashboard</a></li>
+                            <li class="@yield('dashboard-active')"><a href="{{route('dashboard')}}"><i class="fa fa-home"></i> Dashboard</a></li>
                             <li class="@yield('report-active')"><a href="{{route('report')}}"><i class="fa fa-book"></i> Report</a></li>
                           </ul>
                           <ul class="nav navbar-nav navbar-right">
@@ -93,7 +93,7 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="/site_assets/js/site.min.js"></script>       
+        <script src="/site_assets/js/site.min.js"></script>
 
         @stack('scripts')
 

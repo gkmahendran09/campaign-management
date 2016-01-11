@@ -12,7 +12,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <div class="panel-title">Campaign Name: {{$data['campaign_title']}} <a class="btn btn-sm btn-default pull-right" href="{{route('dashboard')}}" title="Change Campaign"><i class="fa fa-list-alt"></i> Manage Forms</a> <a class="btn btn-sm btn-default pull-right" href="{{route('dashboard')}}" title="Change Campaign"><i class="fa fa-pencil"></i> Change Campaign</a></div>
+          <div class="panel-title">Campaign Name: {{$data['campaign_title']}} <a class="btn btn-sm btn-default pull-right" href="{{route('manage_forms', ['campaign_id' => $data['campaign_id']])}}" title="Change Campaign"><i class="fa fa-list-alt"></i> Manage Forms</a> <a class="btn btn-sm btn-default pull-right" href="{{route('dashboard')}}" title="Change Campaign"><i class="fa fa-pencil"></i> Change Campaign</a></div>
         </div>
         <div class="panel-body">
           <p>Start creating a <strong>Form</strong> under this Campaign. Add required fields and click Save Form.</p>

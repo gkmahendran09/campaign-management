@@ -18,7 +18,7 @@ class CreateCampaignDataTable extends Migration
             $table->integer('form_id')->unsigned();
             $table->string('field_key', 15);
             $table->string('field_value');
-            $table->bigInteger('row_id');
+            $table->string('row_id', 50);
             $table->timestamps();
             $table->foreign('campaign_id')->references('campaign_id')->on('campaign_master')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('form_id')->references('form_id')->on('campaign_forms')->onDelete('cascade')->onUpdate('cascade');

@@ -22,8 +22,8 @@
               <p class="lead">
                 Start with a new campaign
               </p>
-              <div class="well">
-                <form method="post" action="{{route('api-create-campaign')}}" role="form" class="form-inline" id="create_campaign">
+              <div class="well text-right">
+                <form method="post" action="{{route('api-create-campaign')}}" role="form" class="" id="create_campaign">
                   {{csrf_field()}}
                   <div class="form-group">
                     <input type="text" placeholder="Campaign Name" name="campaign_name" required="true" class="form-control">
@@ -37,7 +37,7 @@
         </div>
         <div class="col-sm-2">
           <p class="lead text-center">
-            <span class="hidden-xs"><br><br><br></span>
+            <span class="hidden-xs"><br><br><br><br></span>
             (OR)
           </p>
         </div>
@@ -51,7 +51,7 @@
                 Choose from an existing campaign
               </p>
               <div class="well">
-                <div class="form-group campaign_id_container">
+                <div id="campaign_id_container" class="text-right">
                   <i class="fa fa-spinner fa-spin"></i> Loading Campaigns...
                 </div>
               </div>
@@ -103,17 +103,19 @@
       function(data){
         var response = data.message;
         if(data.message == "") {
-          $('.campaign_id_container').html('No Campaigns');
+          $('#campaign_id_container').html('No Campaigns');
         } else {
-          var strBuild = '<select name="campaign_id" id="campaign_id" required="true" class="form-control">';
+          var strBuild = '<div class="form-group">';
+          strBuild += '<select name="campaign_id" id="campaign_id" required="true" class="form-control">';
           $.each(response, function(key, value) {
             strBuild += '<option value="' + value.campaign_id + '">' + value.campaign_title + '</option>';
           });
-          strBuild += '</select><br><input type="button" class="btn btn-primary pull-right" value="Start" id="goToBuild"><br>';
+          strBuild += '</select></div>';
+          strBuild += '<input type="button" class="btn btn-primary" value="Start" id="goToBuild">';
 
-          $('.campaign_id_container').html(strBuild);
+          $('#campaign_id_container').html(strBuild);
         }
-      }, function(data){});    
+      }, function(data){});
 
 
   });

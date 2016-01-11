@@ -26,7 +26,6 @@ function defaultAjaxErrorHandler(data) {
   } else {
     // showModal("Error", "Please try reloading the page.");
     showModal("Error", data.responseText);
-    console.log(data);
   }
 }
 
@@ -69,7 +68,6 @@ function getTemplate(field_count) {
 
 //Show Modal
 function showModal(title, data) {
-  // console.log(data);
   $("#modal .modal-title").html(title);
   $("#modal .modal-body").html(data);
   $("#modal").modal();

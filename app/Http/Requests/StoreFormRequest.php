@@ -76,7 +76,7 @@ class StoreFormRequest extends Request
                 $rules['field_key.'.$key] = 'required|integer';
                 break;
               case 'date':
-                $rules['field_key.'.$key] = 'required|date_format:d/m/y';
+                $rules['field_key.'.$key] = 'required|date_format:d/m/Y';
                 break;
             }
           }
@@ -119,7 +119,7 @@ class StoreFormRequest extends Request
                 break;
               case 'date':
                 $messages['field_key.'.$key.'.required'] = $field_friendly_name[$key] . ' is required';
-                $messages['field_key.'.$key.'.date_format'] = 'date_format:d/m/y';
+                $messages['field_key.'.$key.'.date_format'] = 'date_format:d/m/Y';
                 break;
             }
           }
