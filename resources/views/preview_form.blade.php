@@ -40,6 +40,7 @@
               @endif
               <span class="text-danger" data-error-msg-for="field_key.{{$field->field_key}}"></span>
               <input type="hidden" name="field_datatype[{{$field->field_key}}]" value="{{$field->datatype}}">
+              <input type="hidden" name="field_friendly_name[{{$field->field_key}}]" value="{{$field->field_friendly_name}}">
             </div>
           @endforeach
           <input type="submit" class="btn btn-primary" value="submit">

@@ -32,7 +32,6 @@ class StoreFormRequest extends Request
 
           $field_datatype = $this->request->get('field_datatype');
 
-
           //Check if keys are tampered
           if(!$this->keys_are_equal($db_fields, $form_fields) || $db_fields !== $field_datatype) {
             return false;
@@ -64,25 +63,73 @@ class StoreFormRequest extends Request
         $field_key = $this->request->get('field_key');
         $field_datatype = $this->request->get('field_datatype');
 
-
-        foreach($field_key as $key => $val)
-        {
-          // dd($field_datatype, $key);
-          switch ( $field_datatype[$key] )
+        try {
+          foreach($field_key as $key => $val)
           {
-            case 'text':
-              $rules['field_key.'.$key] = 'required';
-              break;
-            case 'int':
-              $rules['field_key.'.$key] = 'required|integer';
-              break;
-            case 'date':
-              $rules['field_key.'.$key] = 'required|date_format:d/m/y';
-              break;
+            // dd($field_datatype, $key);
+            switch ( $field_datatype[$key] )
+            {
+              case 'text':
+                $rules['field_key.'.$key] = 'required';
+                break;
+              case 'int':
+                $rules['field_key.'.$key] = 'required|integer';
+                break;
+              case 'date':
+                $rules['field_key.'.$key] = 'required|date_format:d/m/y';
+                break;
+            }
           }
         }
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+        }
+
 
         return $rules;
+    }
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+
+        $messages = [
+
+        ];
+
+        $field_key = $this->request->get('field_key');
+        $field_datatype = $this->request->get('field_datatype');
+        $field_friendly_name = $this->request->get('field_friendly_name');
+
+        try {
+          foreach($field_key as $key => $val)
+          {
+            // dd($field_datatype, $key);
+            switch ( $field_datatype[$key] )
+            {
+              case 'text':
+                $messages['field_key.'.$key.'.required'] = $field_friendly_name[$key] . ' is required';
+                break;
+              case 'int':
+                $messages['field_key.'.$key.'.required'] = $field_friendly_name[$key] . ' is required';
+                $messages['field_key.'.$key.'.integer'] = 'Numbers only';
+                break;
+              case 'date':
+                $messages['field_key.'.$key.'.required'] = $field_friendly_name[$key] . ' is required';
+                $messages['field_key.'.$key.'.date_format'] = 'date_format:d/m/y';
+                break;
+            }
+          }
+        }
+        catch(Exception $e) {
+            // echo 'Message: ' .$e->getMessage();
+        }
+
+
+        return $messages;
     }
 
     protected function keys_are_equal($array1, $array2) {
