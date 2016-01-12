@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin_fluid')
 
 @section('title', 'Report')
 
@@ -9,7 +9,7 @@
 @endpush
 
 @section('main')
-<div class="container">
+<div class="">
   <div class="row">
   <div class="col-sm-12">
     <div class="panel panel-default">
@@ -180,6 +180,7 @@
               } else {
                 var strBuild = data.html;
                 reportContainer.html(strBuild);
+                $("#search-container").hide();
               }
             }, defaultAjaxErrorHandler);
         });
@@ -205,6 +206,13 @@
           //     }
           //   }, defaultAjaxErrorHandler);
         });
+
+
+        $("body").on("click", "#filterToggle", function() {
+            $("#search-container").toggle();
+            $(this).toggleClass("btn-default");
+        });
+
   });
 </script>
 

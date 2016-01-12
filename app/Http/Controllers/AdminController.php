@@ -92,7 +92,7 @@ class AdminController extends Controller
       $campaign = \App\CampaignMaster::findOrFail($campaign_id);
       $form = $campaign->forms()->where('form_id', $form_id)->firstOrFail();
       $fields = $form->fields()->get(['field_key', 'field_friendly_name', 'datatype']);
-      $data1 = \App\CampaignData::select('field_key', 'field_value', 'row_id')->where('campaign_id' , $campaign_id)->where('form_id' , $form_id)->paginate(count($fields) * 2);
+      $data1 = \App\CampaignData::select('field_key', 'field_value', 'row_id')->where('campaign_id' , $campaign_id)->where('form_id' , $form_id)->paginate(count($fields) * 10);
       // $data1 = \App\CampaignData::select('field_key', 'field_value', 'row_id')->where('campaign_id' , $campaign_id)->where('form_id' , $form_id)->get();
 
       $field_count = $fields->count();
