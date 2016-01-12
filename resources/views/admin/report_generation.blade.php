@@ -1,14 +1,3 @@
-@extends('layouts.plain')
-
-@section('title', 'Preview Form')
-
-@push('styles')
-
-@endpush
-
-
-
-@section('main')
 <div class="row">
   <div class="">
     <div class="panel panel-default">
@@ -36,7 +25,7 @@
           <thead>
             <tr id="search-container" style="display:none;">
             @foreach ($data['fields'] as $key => $field)
-              <th><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-search"></i></div><input type="text" placeholder="Search {{$field->field_friendly_name}}" class="form-control searchable_{{$field->datatype}}" rel="{{$field->field_key}}"></div></div></th>
+              <th><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-search"></i></div><input type="text" placeholder="Search {{$field->field_friendly_name}}" class="form-control searchable" rel='{"campaign_id": "{{$data['campaign_id']}}","form_id": "{{$data['form_id']}}","field_key": "{{$field->field_key}}" }'></div></div></th>
             @endforeach
             </tr>
             <tr>
@@ -46,20 +35,12 @@
             </tr>
           </thead>
           <tbody>
-            <?php $i=0; ?>
-            <?php $field_count = count($data['fields']); ?>
-
-            @foreach ($field_data as $data)
-                @if ( $i < $field_count )
-                <td>{{$data->field_value}}</td>
-                <?php $i++; ?>
-                @else
-                <?php $i = 0; ?>
-                <tr><td>{{$data->field_value}}</td>
-                <?php $i++; ?>
-                @endif
-
-
+            @foreach ($field_data->chunk($data['field_count']) as $data)
+              <tr>
+                @foreach ( $data as $d )
+                <td>{{$d->field_value}}</td>
+                @endforeach
+              </tr>
             @endforeach
           </tbody>
         </table>
@@ -71,10 +52,3 @@
     </div>
   </div>
 </div>
-@stop
-
-
-
-
-@push('scripts')
-@endpush

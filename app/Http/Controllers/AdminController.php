@@ -87,30 +87,19 @@ class AdminController extends Controller
       return response()->json(['success' => 'true', 'message' => 'Form Created.', 'previewURL' => $url], 200);
     }
 
-    public function get_report($campaign_id, $form_id)
+    public function get_report($campaign_id, $form_id, $field_key = '', $field_value = '')
     {
       $campaign = \App\CampaignMaster::findOrFail($campaign_id);
       $form = $campaign->forms()->where('form_id', $form_id)->firstOrFail();
       $fields = $form->fields()->get(['field_key', 'field_friendly_name', 'datatype']);
-      $data1 = \App\CampaignData::select('field_key', 'field_value', 'row_id')->where('campaign_id' , $campaign_id)->where('form_id' , $form_id)->paginate(count($fields) * 10);
-      // $data1 = \App\CampaignData::select('field_key', 'field_value', 'row_id')->where('campaign_id' , $campaign_id)->where('form_id' , $form_id)->get();
-
-      $field_count = $fields->count();
-      $data_count = $data1->count();
-
-      $num_of_rows = $data_count / $field_count;
-
-      // dd($field_count, $data_count, $num_of_rows);
-
-      $k = 0;
-      for( $i = 0; $i < $num_of_rows; $i++) {
-        for( $j = 0; $j < $field_count; $j++) {
-          $field_data[$i][$j] = $data1[$k]->field_value;
-          $k++;
-        }
-      }
-      // dd($field_data);
-
+      $row_ids = \App\CampaignData::select('row_id')->where('campaign_id', '=', $campaign_id)
+                                                    ->where('form_id', '=', $form_id)
+                                                    ->where('field_value', 'like', '%'.$field_value.'%')
+                                                    ->get();
+      $field_count = count($fields);
+      $collection = \App\CampaignData::select('field_key', 'field_value', 'row_id')
+                                      ->whereIn('row_id', $row_ids->toArray())
+                                      ->paginate($field_count * 10);
 
       $campaign_name = $campaign->campaign_title;
       $form_name = $form->form_title;
@@ -120,12 +109,15 @@ class AdminController extends Controller
         'campaign_name' => $campaign_name,
         'form_id' => $form_id,
         'form_name' => $form_name,
-        'fields' => $fields
+        'fields' => $fields,
+        'field_count' => $field_count
       ];
 
-      $returnHTML = view('admin.report_generation')->with('data', $data)->with('field_data', $data1)->render();
+      $returnHTML = view('admin.report_generation')->with('data', $data)->with('field_data', $collection)->render();
       return response()->json(array('success' => true, 'html'=>$returnHTML));
     }
+
+
 
     public function delete_form($campaign_id, $form_id)
     {

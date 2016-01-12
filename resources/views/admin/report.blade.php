@@ -186,6 +186,36 @@
         });
 
 
+      $("body").on("keypress", ".searchable", function(e) {
+          if (e.keyCode == 13) {
+            // alert("enter pressed");
+            var dataObj = JSON.parse($(this).attr("rel"));
+            var val = $(this).val();
+            var reportContainer = $('#report_container');
+            reportContainer.html(getAjaxLoader('Processing ...'));
+            var type = "get";
+            var url = "{{route('get_report', ['campaign_id' => ':campaign_id', 'form_id' => ':form_id', 'field_key' => ':field_key', 'field_value' => ':field_value'])}}";
+            url = url.replace(':campaign_id', dataObj.campaign_id);
+            url = url.replace(':form_id', dataObj.form_id);
+            url = url.replace(':field_key', dataObj.field_key);
+            url = url.replace(':field_value', val);
+            var data = "";
+
+
+            triggerAjaxRequest(type, url, data,
+              function(data){
+                if(data.html == "") {
+                  reportContainer.html('No Matches Found');
+                } else {
+                  var strBuild = data.html;
+                  reportContainer.html(strBuild);
+                }
+              }, defaultAjaxErrorHandler);
+
+          } else {
+
+          }
+      });
       $("body").on("click", ".sortable", function(e) {
           e.preventDefault();
           alert();
