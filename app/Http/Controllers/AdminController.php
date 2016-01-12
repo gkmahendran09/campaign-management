@@ -87,16 +87,22 @@ class AdminController extends Controller
       return response()->json(['success' => 'true', 'message' => 'Form Created.', 'previewURL' => $url], 200);
     }
 
-    public function get_report($campaign_id, $form_id, $field_key = '', $field_value = '')
+    public function get_report($campaign_id, $form_id, $field_key = null, $field_value = null)
     {
       $campaign = \App\CampaignMaster::findOrFail($campaign_id);
       $form = $campaign->forms()->where('form_id', $form_id)->firstOrFail();
       $fields = $form->fields()->get(['field_key', 'field_friendly_name', 'datatype']);
-      $row_ids = \App\CampaignData::select('row_id')->where('campaign_id', '=', $campaign_id)
-                                                    ->where('form_id', '=', $form_id)
-                                                    ->where('field_value', 'like', '%'.$field_value.'%')
-                                                    ->get();
+
       $field_count = count($fields);
+
+      $row_ids = \App\CampaignData::select('row_id')->where('campaign_id', $campaign_id)
+                                                    ->where('form_id', $form_id);
+      if($field_value !== null) {
+        $row_ids = $row_ids->where('field_value', 'like', '%'.$field_value.'%');
+      }
+
+      $row_ids = $row_ids->get()->sort();
+
       $collection = \App\CampaignData::select('field_key', 'field_value', 'row_id')
                                       ->whereIn('row_id', $row_ids->toArray())
                                       ->paginate($field_count * 10);
