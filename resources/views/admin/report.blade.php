@@ -61,6 +61,10 @@
     var formContainer = $('#form_container');
     var previewContainer = $('#preview_container');
 
+    var filterOn = false;
+    var globalDataObj;
+
+
     var c_id, f_id;
 
     campaignContainer.html(getAjaxLoader('Loading Campaign List...'));
@@ -144,6 +148,8 @@
               } else {
                 var strBuild = '<p class="text-success"><strong>Step 3: Report</strong></p><div id="report_container">' + data.html + '</div>';
                 previewContainer.html(strBuild);
+                $("#filterClear").hide();
+                globalDataObj = JSON.parse($(".searchable:eq(0)").attr("rel"));
               }
             }, defaultAjaxErrorHandler);
         }
@@ -181,6 +187,11 @@
                 var strBuild = data.html;
                 reportContainer.html(strBuild);
                 $("#search-container").hide();
+                if(filterOn) {
+                  $("#filterClear").show();
+                } else {
+                  $("#filterClear").hide();
+                }
               }
             }, defaultAjaxErrorHandler);
         });
@@ -192,26 +203,10 @@
             var dataObj = JSON.parse($(this).attr("rel"));
             var val = $(this).val();
             var reportContainer = $('#report_container');
-            reportContainer.html(getAjaxLoader('Processing ...'));
-            var type = "get";
             var url = "{{route('get_report', ['campaign_id' => ':campaign_id', 'form_id' => ':form_id', 'field_key' => ':field_key', 'field_value' => ':field_value'])}}";
-            url = url.replace(':campaign_id', dataObj.campaign_id);
-            url = url.replace(':form_id', dataObj.form_id);
-            url = url.replace(':field_key', dataObj.field_key);
-            url = url.replace(':field_value', val);
-            var data = "";
-
-
-            triggerAjaxRequest(type, url, data,
-              function(data){
-                if(data.html == "") {
-                  reportContainer.html('No Matches Found');
-                } else {
-                  var strBuild = data.html;
-                  reportContainer.html(strBuild);
-                }
-              }, defaultAjaxErrorHandler);
-
+            doSearch(reportContainer, dataObj, val, url);
+            $("#filterClear").show();
+            filterOn = true;
           } else {
 
           }
@@ -241,6 +236,14 @@
         $("body").on("click", "#filterToggle", function() {
             $("#search-container").toggle();
             $(this).toggleClass("btn-default");
+        });
+
+        $("body").on("click", "#filterClear", function() {
+            var reportContainer = $('#report_container');
+            var url = "{{route('get_report', ['campaign_id' => ':campaign_id', 'form_id' => ':form_id', 'field_key' => ':field_key', 'field_value' => ':field_value'])}}";
+            doSearch(reportContainer, globalDataObj, "", url);
+            filterOn = false;
+            $(this).hide();
         });
 
   });

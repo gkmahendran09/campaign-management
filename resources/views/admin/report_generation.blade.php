@@ -17,6 +17,7 @@
         <div id="report_table">
           <div class="row text-right">
             <div class="col-md-12">
+              <a href="javascript:void(0);" class="btn btn-success" id="filterClear"><i class="fa fa-filter"></i> Clear Filter</a>
               <a href="javascript:void(0);" class="btn btn-primary" id="filterToggle"><i class="fa fa-filter"></i> Toggle Filter</a>
             </div>
             <br><br>
