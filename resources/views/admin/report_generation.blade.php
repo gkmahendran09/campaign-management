@@ -21,6 +21,7 @@
             </div>
             <br><br>
           </div>
+          @if (count($field_data) > 0)
           <table class="table table-bordered">
           <thead>
             <tr id="search-container" style="display:none;">
@@ -44,6 +45,9 @@
             @endforeach
           </tbody>
         </table>
+        @else
+        <p class="lead text-center text-danger">NO Results</p>
+        @endif
         </div>
         <div class="col-md-12 text-center">
           {!! $field_data->render() !!}
