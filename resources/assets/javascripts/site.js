@@ -136,7 +136,8 @@ function clearErrorsForFormRequest() {
 $(document).ready(function() {
   //Ajax Setup
   $.ajaxSetup({
-     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
+     timeout: 20000 //Time in milliseconds
   });
 
   //Tooltip

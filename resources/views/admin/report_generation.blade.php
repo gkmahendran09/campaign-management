@@ -20,6 +20,7 @@
       </div>
       <div class="panel-body table-responsive">
         <div id="report_table">
+          @if (count($field_data) > 0)
           <div class="row text-right">
             <div class="col-md-12">
               <a href="javascript:void(0);" class="btn btn-success" id="filterClear" style="display:none;"><i class="fa fa-filter"></i> Clear Filter</a>
@@ -27,7 +28,6 @@
             </div>
             <br><br>
           </div>
-          @if (count($field_data) > 0)
           <table class="table table-bordered">
           <thead>
             <tr id="search-container" style="display:none;">

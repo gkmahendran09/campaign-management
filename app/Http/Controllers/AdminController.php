@@ -101,12 +101,15 @@ class AdminController extends Controller
         $row_ids = $row_ids->where('field_value', 'like', $field_value.'%');
       }
 
-      $row_ids = $row_ids->get();
+      $row_ids = $row_ids->toSql();
+
+      dd($row_ids);
 
       $collection = \App\CampaignData::select('field_id', 'field_value', 'row_id')
                                       ->where('form_id', $form_id)
                                       ->whereIn('row_id', $row_ids->toArray())
                                       ->paginate($field_count * 10);
+
       $campaign_name = $campaign->campaign_title;
       $form_name = $form->form_title;
 

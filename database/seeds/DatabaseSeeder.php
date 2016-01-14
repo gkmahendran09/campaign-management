@@ -21,8 +21,20 @@ class DatabaseSeeder extends Seeder
 
         //NEW DB STRUCTURE
         // $this->call(CampaignDataV4TableSeeder::class);
-        $this->call(CampaignDataV5TableSeeder::class);
-        $this->call(CampaignDataV6TableSeeder::class);
+        // $this->call(CampaignDataV5TableSeeder::class);
+        // $this->call(CampaignDataV6TableSeeder::class);
+
+        // $this->call(CampaignDataV7TableSeeder::class);
+        // $this->call(CampaignDataV8TableSeeder::class);
+        // $this->call(CampaignDataV9TableSeeder::class);
+
+        // $this->call(CampaignDataV10TableSeeder::class);
+        // $this->call(CampaignDataV11TableSeeder::class);
+        // $this->call(CampaignDataV12TableSeeder::class);
+
+        $this->call(CampaignDataV13TableSeeder::class);
+        $this->call(CampaignDataV14TableSeeder::class);
+        $this->call(CampaignDataV15TableSeeder::class);
 
         Model::reguard();
     }
