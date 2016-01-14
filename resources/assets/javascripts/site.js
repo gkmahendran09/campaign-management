@@ -1,5 +1,5 @@
 //Do Search
-function doSearch(reportContainer, dataObj, val, url) {
+function doSearch(reportContainer, dataObj, val, url, filterOn) {
   reportContainer.html(getAjaxLoader('Processing ...'));
   var type = "get";
   url = url.replace(':campaign_id', dataObj.campaign_id);
@@ -8,7 +8,6 @@ function doSearch(reportContainer, dataObj, val, url) {
   url = url.replace(':field_value', val);
   var data = "";
 
-
   triggerAjaxRequest(type, url, data,
       function(data){
         if(data.html == "") {
@@ -16,9 +15,18 @@ function doSearch(reportContainer, dataObj, val, url) {
         } else {
           var strBuild = data.html;
           reportContainer.html(strBuild);
+          filterCheck(filterOn);
         }
       }, defaultAjaxErrorHandler);
 
+}
+
+function filterCheck(filterOn) {
+  if(filterOn) {
+    $("#filterClear").show();
+  } else {
+    $("#filterClear").hide();
+  }
 }
 
 //get loader

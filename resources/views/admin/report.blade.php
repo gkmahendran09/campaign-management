@@ -204,9 +204,9 @@
             var val = $(this).val();
             var reportContainer = $('#report_container');
             var url = "{{route('get_report', ['campaign_id' => ':campaign_id', 'form_id' => ':form_id', 'field_key' => ':field_key', 'field_value' => ':field_value'])}}";
-            doSearch(reportContainer, dataObj, val, url);
-            $("#filterClear").show();
             filterOn = true;
+            doSearch(reportContainer, dataObj, val, url, filterOn);
+            // $("#filterClear").show();
           } else {
 
           }
@@ -241,9 +241,8 @@
         $("body").on("click", "#filterClear", function() {
             var reportContainer = $('#report_container');
             var url = "{{route('get_report', ['campaign_id' => ':campaign_id', 'form_id' => ':form_id', 'field_key' => ':field_key', 'field_value' => ':field_value'])}}";
-            doSearch(reportContainer, globalDataObj, "", url);
             filterOn = false;
-            $(this).hide();
+            doSearch(reportContainer, globalDataObj, "", url, filterOn);
         });
 
   });
