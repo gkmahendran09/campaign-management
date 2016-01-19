@@ -95,20 +95,27 @@ class AdminController extends Controller
 
       $field_count = count($fields);
 
-      $row_ids = \App\CampaignData::distinct()->select('row_id')
-                                              ->where('form_id', $form_id);
-      if($field_value !== null) {
-        $row_ids = $row_ids->where('field_value', 'like', $field_value.'%');
-      }
+      // $row_ids = \App\CampaignData::distinct()->select('row_id')
+      //                                         ->where('form_id', $form_id);
+      // if($field_value !== null) {
+      //   $row_ids = $row_ids->where('field_value', 'like', $field_value.'%');
+      // }
+      //
+      // $row_ids = $row_ids->get();
 
-      $row_ids = $row_ids->toSql();
 
-      dd($row_ids);
 
       $collection = \App\CampaignData::select('field_id', 'field_value', 'row_id')
                                       ->where('form_id', $form_id)
-                                      ->whereIn('row_id', $row_ids->toArray())
-                                      ->paginate($field_count * 10);
+                                      // ->groupBy('row_id', 'field_id')
+                                      ->orderBy('row_id')
+                                      ->orderBy('field_id')
+                                      // ->take($field_count * 1000)
+                                      ->paginate($field_count * 50);
+                                      // ->get();
+                                      // ->toSql();
+
+                                      // dd($collection);
 
       $campaign_name = $campaign->campaign_title;
       $form_name = $form->form_title;

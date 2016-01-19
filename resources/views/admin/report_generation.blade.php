@@ -1,6 +1,7 @@
 <div class="row text-center">
   <div class="col-md-2 col-md-offset-5">
-    Processed in <span class="text-danger">{{ \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::createFromTimestamp(LARAVEL_START))}}</span> seconds
+    {{-- Processed in <span class="text-danger">{{ \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::createFromTimestamp(LARAVEL_START))}}</span> seconds --}}
+    {{-- Processed in <span class="text-danger">{{ (microtime(true) - LARAVEL_START) }}</span> seconds --}}
   </div>
 </div>
 <div class="row">

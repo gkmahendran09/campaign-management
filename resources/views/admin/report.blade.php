@@ -141,12 +141,16 @@
           var data = "";
 
 
+          var start_time = new Date().getTime();
+
           triggerAjaxRequest(type, url, data,
-            function(data){
+            function(data) {
               if(data.html == "") {
                 previewContainer.html('No Forms');
               } else {
-                var strBuild = '<p class="text-success"><strong>Step 3: Report</strong></p><div id="report_container">' + data.html + '</div>';
+                var request_time = new Date().getTime() - start_time;
+
+                var strBuild = '<p class="text-success"><strong>Step 3: Report</strong></p><div id="report_container"><p class="text-center">Processed in <span class="text-danger">' + (request_time/1000) + '</span> seconds.</p>' + data.html + '</div>';
                 previewContainer.html(strBuild);
                 $("#filterClear").hide();
                 globalDataObj = JSON.parse($(".searchable:eq(0)").attr("rel"));
@@ -178,13 +182,17 @@
           var url = $(this).attr('href');
           var data = "";
 
+          var start_time = new Date().getTime();
 
           triggerAjaxRequest(type, url, data,
             function(data){
               if(data.html == "") {
                 reportContainer.html('No Reports Available');
               } else {
-                var strBuild = data.html;
+                var request_time = new Date().getTime() - start_time;
+
+                var strBuild = '<p class="text-center">Processed in <span class="text-danger">' + (request_time/1000) + '</span> seconds.</p>' + data.html;
+                // var strBuild = data.html;
                 reportContainer.html(strBuild);
                 $("#search-container").hide();
                 if(filterOn) {
